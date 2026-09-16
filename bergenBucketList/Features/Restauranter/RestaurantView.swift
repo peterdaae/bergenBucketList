@@ -10,16 +10,16 @@ import SwiftUI
 struct RestaurantView: View {
     var body: some View {
         List {
-            Section("Restaurants") {
                 ForEach(restaurants) {
                     restaurant in NavigationLink {
-                        RestaurantDetailView(restaurants: restaurant)
+                        RestaurantDetailView(restaurant: restaurant)
                     } label: {
-                        HStack(spacing: 16){
+                        HStack(spacing: 8){
                             RestaurantPosterView(posterURL: restaurant.posterURL)
+                                .frame(width: 150)
                             VStack(alignment: .leading){
                                 Text(restaurant.title)
-                                    .font(.title2)
+                                    .font(.headline)
                                     .fontWeight(.semibold)
                                 Label {
                                     Text("\(restaurant.review, specifier: "%.1f")")
@@ -27,13 +27,15 @@ struct RestaurantView: View {
                                     Image(systemName: "star.fill")
                                         .foregroundStyle(.yellow)
                                 }
-                                .font(.title2)
+                                .font(.headline)
                             }
                         }
                     }
                 }
-            }
         }
+        .background(Color(uiColor: .secondarySystemBackground))
+        .navigationTitle("Restaurants in Bergen")
+        .navigationBarTitleDisplayMode(.inline)
         
     }
 }

@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
-    let restaurants: Restaurant
+    
+    let restaurant: Restaurant
+    //@State private var isPressed: Bool
+    @State private var countPeople: Int = 0
+    
     var body: some View {
         VStack{
             Form{
                 HStack{
-                    Section("") {
                         Spacer()
-                        RestaurantPosterView(posterURL: restaurants.posterURL)
+                        RestaurantPosterView(posterURL: restaurant.posterURL)
                             .frame(width: 420, height: 210)
                         Spacer()
                     }
-                }
                 .listRowBackground(Color.clear)
                 Section("About"){
                     VStack(alignment: .leading){
-                        Text(restaurants.title)
+                        Text(restaurant.title)
                             .font(.title)
                         Spacer()
                         Label {
@@ -34,7 +36,7 @@ struct RestaurantDetailView: View {
                                 .foregroundStyle(.red)
                         }
                         Spacer()
-                        Text(restaurants.summary)
+                        Text(restaurant.summary)
                             .lineSpacing(8)
                             .foregroundStyle(.secondary)
                     }
@@ -42,22 +44,45 @@ struct RestaurantDetailView: View {
                 }
             }
             
-            VStack(spacing: 12){
-                Text("Reserve Table")
+            VStack(spacing: 16){
+                Text("Reserve table")
                     .foregroundStyle(.black)
+                    .font(.title)
+                    .monospacedDigit()
+                HStack(spacing: 32) {
+                    Button {
+                        countPeople = max(0, countPeople - 1)
+                    } label: {
+                        Label("Remove person", systemImage: "minus.circle.fill")
+                            .labelStyle(.iconOnly)
+                    }
+                    
+                    Text("\(countPeople)")
+                        .font(.title3)
+                        .monospacedDigit()
+                        .frame(minWidth: 24)
+                    
+                    Button {
+                        countPeople += 1
+                    } label: {
+                        Label("Add person", systemImage: "plus.circle.fill")
+                            .labelStyle(.iconOnly)
+                    }
+                }
+                .font(.title)
+                .foregroundStyle(.black)
             }
-            .foregroundStyle(.green)
             .padding(25)
             .lineLimit(1)
             .frame(maxWidth: .infinity)
-            .background(Color.green)
-
+            .background(.green)
         }
         .background(Color(uiColor: .secondarySystemBackground))
+        
     }
 }
 
 #Preview {
     let restaurant = restaurants.first!
-    RestaurantDetailView(restaurants: restaurant)
+    RestaurantDetailView(restaurant: restaurant)
 }

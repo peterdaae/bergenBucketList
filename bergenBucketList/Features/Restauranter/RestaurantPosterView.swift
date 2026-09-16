@@ -20,11 +20,9 @@ struct RestaurantPosterView: View {
            
             ZStack{
                 Color.gray.opacity(0.15)
-                
                 ProgressView()
             }
         }
-        .clipped()
         .cornerRadius(12)
     }
 }
